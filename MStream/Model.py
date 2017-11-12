@@ -8,6 +8,8 @@ class Model:
     KIncrement = 100
     smallDouble = 1e-150
     largeDouble = 1e150
+    dt = 100# num of tweets in one batch
+    B = 10
 
     def __init__(self, K, KIncrement, V, iterNum,alpha, beta, dataset, ParametersStr, sampleNo, wordsInTopicNum):
         self.dataset = dataset
@@ -24,6 +26,19 @@ class Model:
         self.sampleNo = sampleNo
         self.wordsInTopicNum = wordsInTopicNum
         self.phi_zv = []
+        self.Batch_n_zv = [[[0]*(self.V+1)]*self.Kmax]*(self.B+2)
+        self.Batch_n_z = [[0]*self.Kmax]*(self.B+2)
+        self.Batch_m_z = [[0] * self.Kmax] * (self.B + 2)
+        self.Batch_kToClusterPos = [[0] * self.Kmax] * (self.B + 2)
+        self.Batch_clusterPosTok = [[0] * self.Kmax] * (self.B + 2)
+        self.Batch_K = [0] * (self.B + 2)
+        self.last_n_zv = [[0]*(self.V+1)]*self.Kmax
+        self.last_n_z = [0] * self.Kmax
+        self.last_m_z = [0] * self.Kmax
+        self.last_kToClusterPos = [0] * self.Kmax
+        self.last_clusterPosTok = [0] * self.Kmax
+        self.last_K = 0
+
 
     def intialize(self, documentSet):
         self.D = documentSet.D # The whole number of documents
@@ -69,6 +84,112 @@ class Model:
                     wordFre = document.wordFreArray[w]
                     self.n_zv[cluster][wordNo] += wordFre
                     self.n_z[cluster] += wordFre
+                if d % self.dt == 0:
+                    self.delete_outdated_data(int(d / self.dt))
+
+    def gibbsSampling_lzk(self, documentSet):
+        cur = 0
+        while cur * self.dt < self.D:
+            to = min(self.dt * (cur + 1),self.D)
+            for i in range(self.iterNum):
+                for d in range(cur * self.dt,to):
+                    document = documentSet.documents[d]
+                    cluster = self.z[d]
+                    self.m_z[cluster] -= 1
+                    for w in range(document.wordNum):
+                        wordNo = document.wordIdArray[w]
+                        wordFre = document.wordFreArray[w]
+                        self.n_zv[cluster][wordNo] -= wordFre
+                        self.n_z[cluster] -= wordFre
+                    self.checkEmpty(cluster)
+                    cluster = self.sampleCluster(d, document)
+                    self.z[d] = cluster
+                    self.m_z[cluster] += 1
+                    for w in range(document.wordNum):
+                        wordNo = document.wordIdArray[w]
+                        wordFre = document.wordFreArray[w]
+                        self.n_zv[cluster][wordNo] += wordFre
+                        self.n_z[cluster] += wordFre
+            self.delete_outdated_data(int(d / self.dt))
+            print("\tcurrent batch is ", cur)
+            cur += 1
+
+    def delete_outdated_data(self,cur_bat):
+        cur_bat = int(cur_bat)
+        if cur_bat < self.B + 1:
+            self.Batch_K[cur_bat] = self.K
+            self.Batch_kToClusterPos[cur_bat] = self.kToClusterPos[:]
+            self.Batch_clusterPosTok[cur_bat] = self.clusterPosTok[:]
+            self.Batch_n_z[cur_bat] = self.n_z[:]
+            self.Batch_n_zv[cur_bat] = self.n_zv[:]
+            for i in range(self.K):
+                self.Batch_n_zv[cur_bat][i] = self.n_zv[i][:]
+        else:
+            print(cur_bat)
+            for i in range(self.K):
+                # tmp = B + 1
+                # current - last -> tmp
+                cluster1 = self.kToClusterPos[i]
+                if self.last_clusterPosTok[cluster1] >= self.K:
+                    continue
+                cluster2 = self.last_kToClusterPos[self.last_clusterPosTok[cluster1]]
+                self.Batch_m_z[self.B + 1][cluster1] = self.m_z[cluster1] - self.last_m_z[cluster2]
+                if self.Batch_m_z[self.B + 1][cluster1] < 0:
+                    self.Batch_m_z[self.B + 1][cluster1] = 0
+                self.Batch_n_z[self.B + 1][cluster1] = self.n_z[cluster1] - self.last_n_z[cluster2]
+                if self.Batch_n_z[self.B + 1][cluster1] < 0:
+                    self.Batch_n_z[self.B + 1][cluster1] = 0
+                for j in range(len(self.n_zv[cluster1])):
+                    if j in self.last_n_zv[cluster2]:
+                        self.Batch_n_zv[self.B + 1][cluster1][j] = self.n_zv[cluster1][j] - self.last_n_zv[cluster2][j]
+                        if self.Batch_n_zv[self.B + 1][cluster1][j] < 0:
+                            self.Batch_n_zv[self.B + 1][cluster1][j] = 0
+                self.Batch_kToClusterPos[self.B + 1] = self.kToClusterPos[:]
+                self.Batch_clusterPosTok[self.B + 1] = self.clusterPosTok[:]
+                self.Batch_K[self.B + 1] = self.K
+            print('1')
+            for i in range(self.K):
+                # current - first ->current
+                cluster1 = self.kToClusterPos[i]
+                if self.Batch_clusterPosTok[cur_bat % (self.B + 1)][cluster1] >= self.Batch_K[cur_bat % (self.B + 1)]:
+                    continue
+                cluster2 = self.Batch_kToClusterPos[cur_bat % (self.B + 1)][self.Batch_clusterPosTok[cur_bat % (self.B + 1)][cluster1]]
+                self.m_z[cluster1] -= self.Batch_m_z[cur_bat % (self.B + 1)][cluster2]
+                if self.m_z[cluster1] < 0:
+                    self.m_z[cluster1] = 0
+                self.n_z[cluster1] -= self.Batch_n_z[cur_bat % (self.B + 1)][cluster2]
+                if self.n_z[cluster1] < 0:
+                    self.n_z[cluster1] = 0
+                for j in range(len(self.n_zv[cluster1])):
+                    if j in self.Batch_n_zv[cur_bat % (self.B + 1)][cluster2]:
+                        self.n_zv[cluster1][j] -= self.Batch_n_zv[cur_bat % (self.B + 1)][cluster2][j]
+                        if self.n_zv[cluster1][j] < 0:
+                            self.n_zv[cluster1][j] = 0
+            p = self.K
+            i = 0
+            print('2')
+            while i < p:
+                if self.checkEmpty(i):
+                    p -= 1
+                i += 1
+            # tmp -> last_pos
+            print('3')
+            for i in range(self.Batch_K[self.B + 1]):
+                self.Batch_K[cur_bat % (self.B + 1)] = self.Batch_K[self.B + 1]
+                self.Batch_clusterPosTok[cur_bat % (self.B + 1)] = self.Batch_clusterPosTok[self.B + 1][:]
+                self.Batch_kToClusterPos[cur_bat % (self.B + 1)] = self.Batch_kToClusterPos[self.B + 1][:]
+                for j in range(self.Batch_K[self.B + 1]):
+                    self.Batch_n_zv[cur_bat % (self.B + 1)][j] = self.Batch_n_zv[self.B + 1][j][:]
+                self.Batch_n_z[cur_bat % (self.B + 1)] = self.Batch_n_z[self.B + 1][:]
+                self.Batch_m_z[cur_bat % (self.B + 1)] = self.Batch_m_z[self.B + 1][:]
+        #last = current
+        self.last_clusterPosTok = self.clusterPosTok[:]
+        self.last_kToClusterPos = self.kToClusterPos[:]
+        self.last_m_z = self.m_z
+        self.last_n_z = self.n_z
+        self.last_K = self.K
+        for i in range(self.K):
+            self.last_n_zv[i] = self.n_zv[i][:]
 
     def gibbsOneIteration(self, documentSet):
         for d in range(self.D):
@@ -89,6 +210,8 @@ class Model:
                 wordFre = document.wordFreArray[w]
                 self.n_zv[cluster][wordNo] -= wordFre
                 self.n_z[cluster] -= wordFre
+            if d % self.dt == 0:
+                self.delete_outdated_data(d / self.dt)
 
     def sampleCluster(self, d, document):
         prob = [float(0.0)] * (self.K + 1)
@@ -145,6 +268,8 @@ class Model:
             self.clusterPosTok[cluster] = self.K - 1
             self.clusterPosTok[lastClusterPos] = k
             self.K -= 1
+            return 1
+        return 0
 
     def enlargeCapacity(self):
         Kmax_old = self.Kmax
