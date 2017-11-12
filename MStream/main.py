@@ -94,10 +94,10 @@ if __name__ == '__main__':
     K = 0 # Number of clusters
     KIncrement = 100
     beta = 0.02
-    iterNum = 30
-    sampleNum = 2
+    iterNum = 2
+    sampleNum = 1
     wordsInTopicNum = 15
-    # runMStreamSimple(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum)
+    runMStreamSimple(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum)
     # runWithAlphaScale(beta, K, KIncrement, iterNum, sampleNum, dataset, wordsInTopicNum, docNum)
     # runWithBetas(alpha, K, KIncrement, iterNum, sampleNum, dataset, wordsInTopicNum)
-    runWithNiters(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum)
+    # runWithNiters(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum)

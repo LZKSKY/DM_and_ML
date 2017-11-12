@@ -28,7 +28,7 @@ class MStream:
         model = Model(self.K, self.KIncrement, self.V, self.iterNum, self.alpha, self.beta, self.dataset,
                       ParametersStr, sampleNo, self.wordsInTopicNum)
         model.intialize(self.documentSet)
-        model.gibbsSampling(self.documentSet)
+        model.gibbsSampling_lzk(self.documentSet)
         print("Gibbs sampling successful! \nStart to saving results.")
         model.output(self.documentSet, self.outputPath, self.wordList)
         print("Saving successful!")
