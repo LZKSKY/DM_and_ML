@@ -3,15 +3,16 @@ import sys
 import os
 import time
 import json
+import copy
+
 
 class Model:
     KIncrement = 100
     smallDouble = 1e-150
     largeDouble = 1e150
-    dt = 100# num of tweets in one batch
-    B = 10
+    Max_Batch = 1 # Max number of batches we will consider
 
-    def __init__(self, K, KIncrement, V, iterNum,alpha, beta, dataset, ParametersStr, sampleNo, wordsInTopicNum):
+    def __init__(self, K, KIncrement, V, iterNum,alpha, beta, dataset, ParametersStr, sampleNo, wordsInTopicNum, timefil):
         self.dataset = dataset
         self.ParametersStr = ParametersStr
         self.alpha = alpha
@@ -26,49 +27,125 @@ class Model:
         self.sampleNo = sampleNo
         self.wordsInTopicNum = wordsInTopicNum
         self.phi_zv = []
-        self.Batch_n_zv = [[[0]*(self.V+1)]*self.Kmax]*(self.B+2)
-        self.Batch_n_z = [[0]*self.Kmax]*(self.B+2)
-        self.Batch_m_z = [[0] * self.Kmax] * (self.B + 2)
-        self.Batch_kToClusterPos = [[0] * self.Kmax] * (self.B + 2)
-        self.Batch_clusterPosTok = [[0] * self.Kmax] * (self.B + 2)
-        self.Batch_K = [0] * (self.B + 2)
-        self.last_n_zv = [[0]*(self.V+1)]*self.Kmax
-        self.last_n_z = [0] * self.Kmax
-        self.last_m_z = [0] * self.Kmax
-        self.last_kToClusterPos = [0] * self.Kmax
-        self.last_clusterPosTok = [0] * self.Kmax
-        self.last_K = 0
 
+        self.batchNum2tweetID = {} # batch num to tweet id
+        self.batchNum = 1 # current batch number
+        with open(timefil) as timef:
+            for line in timef:
+                buff = line.strip().split(' ')
+                self.batchNum2tweetID[self.batchNum] = int(buff[1])
+                self.batchNum += 1
+        self.batchNum = 1
+        print("There are", self.batchNum2tweetID.__len__(), "time points.\n\t", self.batchNum2tweetID)
+
+    def run(self, documentSet, outputPath, wordList):
+        self.D_All = documentSet.D  # The whole number of documents
+        self.z = {}  # Cluster assignments of each document                 (documentID -> clusterID)
+        self.m_z = {}  # The number of documents in cluster z               (clusterID -> number of documents)
+        self.n_z = {}  # The number of words in cluster z                   (clusterID -> number of words)
+        self.n_zv = {}  # The number of occurrences of word v in cluster z  (n_zv[clusterID][wordID] = number)
+        self.currentDoc = 0  # Store start point of next batch
+        self.startDoc = 0  # Store start point of this batch
+        self.D = 0  # The number of documents currently
+        self.K_current = self.K # the number of cluster containing documents currently
+        self.BatchSet = {} # Store information of each batch
+        while self.currentDoc < self.D_All:
+            print("Batch", self.batchNum)
+            if self.batchNum not in self.batchNum2tweetID:
+                break
+            if self.batchNum <= self.Max_Batch:
+                self.BatchSet[self.batchNum] = {}
+                self.BatchSet[self.batchNum]['D'] = copy.deepcopy(self.D)
+                self.BatchSet[self.batchNum]['z'] = copy.deepcopy(self.z)
+                self.BatchSet[self.batchNum]['m_z'] = copy.deepcopy(self.m_z)
+                self.BatchSet[self.batchNum]['n_z'] = copy.deepcopy(self.n_z)
+                self.BatchSet[self.batchNum]['n_zv'] = copy.deepcopy(self.n_zv)
+                self.intialize(documentSet)
+                self.gibbsSampling(documentSet)
+            else:
+                # remove influence of batch earlier than Max_Batch
+                self.D -= self.BatchSet[self.batchNum - self.Max_Batch]['D']
+                for cluster in self.m_z:
+                    if cluster in self.BatchSet[self.batchNum - self.Max_Batch]['m_z']:
+                        self.m_z[cluster] -= self.BatchSet[self.batchNum - self.Max_Batch]['m_z'][cluster]
+                        self.checkEmpty(cluster)
+                        self.n_z[cluster] -= self.BatchSet[self.batchNum - self.Max_Batch]['n_z'][cluster]
+                        for word in self.n_zv[cluster]:
+                            if word in self.BatchSet[self.batchNum - self.Max_Batch]['n_zv'][cluster]:
+                                self.n_zv[cluster][word] -= self.BatchSet[self.batchNum - self.Max_Batch]['n_zv'][cluster][word]
+                self.BatchSet.pop(self.batchNum - self.Max_Batch)
+                self.BatchSet[self.batchNum] = {}
+                self.BatchSet[self.batchNum]['D'] = copy.deepcopy(self.D)
+                self.BatchSet[self.batchNum]['z'] = copy.deepcopy(self.z)
+                self.BatchSet[self.batchNum]['m_z'] = copy.deepcopy(self.m_z)
+                self.BatchSet[self.batchNum]['n_z'] = copy.deepcopy(self.n_z)
+                self.BatchSet[self.batchNum]['n_zv'] = copy.deepcopy(self.n_zv)
+                self.intialize(documentSet)
+                self.gibbsSampling(documentSet)
+            # get influence of only the current batch (remove other influence)
+            self.BatchSet[self.batchNum-1]['D'] = self.D - self.BatchSet[self.batchNum-1]['D']
+            for cluster in self.m_z:
+                if cluster not in self.BatchSet[self.batchNum - 1]['m_z']:
+                    self.BatchSet[self.batchNum - 1]['m_z'][cluster] = 0
+                if cluster not in self.BatchSet[self.batchNum - 1]['n_z']:
+                    self.BatchSet[self.batchNum - 1]['n_z'][cluster] = 0
+                self.BatchSet[self.batchNum - 1]['m_z'][cluster] = self.m_z[cluster] - self.BatchSet[self.batchNum - 1]['m_z'][cluster]
+                self.BatchSet[self.batchNum - 1]['n_z'][cluster] = self.n_z[cluster] - self.BatchSet[self.batchNum - 1]['n_z'][cluster]
+                if cluster not in self.BatchSet[self.batchNum - 1]['n_zv']:
+                    self.BatchSet[self.batchNum - 1]['n_zv'][cluster] = {}
+                for word in self.n_zv[cluster]:
+                    if word not in self.BatchSet[self.batchNum - 1]['n_zv'][cluster]:
+                        self.BatchSet[self.batchNum - 1]['n_zv'][cluster][word] = 0
+                    self.BatchSet[self.batchNum - 1]['n_zv'][cluster][word] = self.n_zv[cluster][word] - self.BatchSet[self.batchNum - 1]['n_zv'][cluster][word]
+            print("\tGibbs sampling successful! Start to saving results.")
+            self.output(documentSet, outputPath, wordList, self.batchNum - 1)
+            print("\tSaving successful!")
 
     def intialize(self, documentSet):
-        self.D = documentSet.D # The whole number of documents
-        self.z = [0]*self.D # Cluster assignments of each document
-        self.m_z = [0]*self.Kmax # The number of documents in cluster z
-        self.n_z = [0]*self.Kmax # The number of words in cluster z
-        self.n_zv = [[0]*(self.V+1)]*self.Kmax # The number of occurrences of word v in cluster z
-        self.kToClusterPos = [0]*self.Kmax
-        self.clusterPosTok = [0]*self.Kmax
-        for k in range(self.Kmax):
-            self.kToClusterPos[k] = k
-            self.clusterPosTok[k] = k
-        for d in range(self.D):
+        for d in range(self.currentDoc, self.D_All):
+            documentID = documentSet.documents[d].documentID
+            if documentID <= self.batchNum2tweetID[self.batchNum]:
+                self.D += 1
+            else:
+                break
+        print("\t", self.D, "documents will be analyze")
+        for d in range(self.currentDoc, self.D_All):
             document = documentSet.documents[d]
-            cluster = self.sampleCluster(d, document) # Get initial cluster of each document
-            self.z[d] = cluster
-            self.m_z[cluster] += 1
-            for w in range(document.wordNum):
-                wordNo = document.wordIdArray[w]
-                wordFre = document.wordFreArray[w]
-                self.n_zv[cluster][wordNo] += wordFre
-                self.n_z[cluster] += wordFre
+            documentID = document.documentID
+            if documentID <= self.batchNum2tweetID[self.batchNum]:
+                cluster = self.sampleCluster(d, document)  # Get initial cluster of each document
+                self.z[documentID] = cluster
+                if cluster not in self.m_z:
+                    self.m_z[cluster] = 0
+                self.m_z[cluster] += 1
+                for w in range(document.wordNum):
+                    wordNo = document.wordIdArray[w]
+                    wordFre = document.wordFreArray[w]
+                    if cluster not in self.n_zv:
+                        self.n_zv[cluster] = {}
+                    if wordNo not in self.n_zv[cluster]:
+                        self.n_zv[cluster][wordNo] = 0
+                    self.n_zv[cluster][wordNo] += wordFre
+                    if cluster not in self.n_z:
+                        self.n_z[cluster] = 0
+                    self.n_z[cluster] += wordFre
+                if d == self.D_All - 1:
+                    self.startDoc = self.currentDoc
+                    self.currentDoc = self.D_All
+                    self.batchNum += 1
+            else:
+                self.startDoc = self.currentDoc
+                self.currentDoc = d
+                self.batchNum += 1
+                break
 
     def gibbsSampling(self, documentSet):
-
         for i in range(self.iterNum):
             print("\titer is ", i)
-            for d in range(self.D):
+            for d in range(self.startDoc, self.currentDoc):
                 document = documentSet.documents[d]
-                cluster = self.z[d]
+                documentID = document.documentID
+                cluster = self.z[documentID]
                 self.m_z[cluster] -= 1
                 for w in range(document.wordNum):
                     wordNo = document.wordIdArray[w]
@@ -77,119 +154,153 @@ class Model:
                     self.n_z[cluster] -= wordFre
                 self.checkEmpty(cluster)
                 cluster = self.sampleCluster(d, document)
-                self.z[d] = cluster
+                self.z[documentID] = cluster
+                if cluster not in self.m_z:
+                    self.m_z[cluster] = 0
                 self.m_z[cluster] += 1
                 for w in range(document.wordNum):
                     wordNo = document.wordIdArray[w]
                     wordFre = document.wordFreArray[w]
+                    if cluster not in self.n_zv:
+                        self.n_zv[cluster] = {}
+                    if wordNo not in self.n_zv[cluster]:
+                        self.n_zv[cluster][wordNo] = 0
+                    if cluster not in self.n_z:
+                        self.n_z[cluster] = 0
                     self.n_zv[cluster][wordNo] += wordFre
                     self.n_z[cluster] += wordFre
-                if d % self.dt == 0:
-                    self.delete_outdated_data(int(d / self.dt))
 
-    def gibbsSampling_lzk(self, documentSet):
-        cur = 0
-        while cur * self.dt < self.D:
-            to = min(self.dt * (cur + 1),self.D)
-            for i in range(self.iterNum):
-                for d in range(cur * self.dt,to):
-                    document = documentSet.documents[d]
-                    cluster = self.z[d]
-                    self.m_z[cluster] -= 1
-                    for w in range(document.wordNum):
-                        wordNo = document.wordIdArray[w]
-                        wordFre = document.wordFreArray[w]
-                        self.n_zv[cluster][wordNo] -= wordFre
-                        self.n_z[cluster] -= wordFre
-                    self.checkEmpty(cluster)
-                    cluster = self.sampleCluster(d, document)
-                    self.z[d] = cluster
-                    self.m_z[cluster] += 1
-                    for w in range(document.wordNum):
-                        wordNo = document.wordIdArray[w]
-                        wordFre = document.wordFreArray[w]
-                        self.n_zv[cluster][wordNo] += wordFre
-                        self.n_z[cluster] += wordFre
-            self.delete_outdated_data(int(d / self.dt))
-            print("\tcurrent batch is ", cur)
-            cur += 1
-
-    def delete_outdated_data(self,cur_bat):
-        cur_bat = int(cur_bat)
-        if cur_bat < self.B + 1:
-            self.Batch_K[cur_bat] = self.K
-            self.Batch_kToClusterPos[cur_bat] = self.kToClusterPos[:]
-            self.Batch_clusterPosTok[cur_bat] = self.clusterPosTok[:]
-            self.Batch_n_z[cur_bat] = self.n_z[:]
-            self.Batch_n_zv[cur_bat] = self.n_zv[:]
-            for i in range(self.K):
-                self.Batch_n_zv[cur_bat][i] = self.n_zv[i][:]
-        else:
-            print(cur_bat)
-            for i in range(self.K):
-                # tmp = B + 1
-                # current - last -> tmp
-                cluster1 = self.kToClusterPos[i]
-                if self.last_clusterPosTok[cluster1] >= self.K:
-                    continue
-                cluster2 = self.last_kToClusterPos[self.last_clusterPosTok[cluster1]]
-                self.Batch_m_z[self.B + 1][cluster1] = self.m_z[cluster1] - self.last_m_z[cluster2]
-                if self.Batch_m_z[self.B + 1][cluster1] < 0:
-                    self.Batch_m_z[self.B + 1][cluster1] = 0
-                self.Batch_n_z[self.B + 1][cluster1] = self.n_z[cluster1] - self.last_n_z[cluster2]
-                if self.Batch_n_z[self.B + 1][cluster1] < 0:
-                    self.Batch_n_z[self.B + 1][cluster1] = 0
-                for j in range(len(self.n_zv[cluster1])):
-                    if j in self.last_n_zv[cluster2]:
-                        self.Batch_n_zv[self.B + 1][cluster1][j] = self.n_zv[cluster1][j] - self.last_n_zv[cluster2][j]
-                        if self.Batch_n_zv[self.B + 1][cluster1][j] < 0:
-                            self.Batch_n_zv[self.B + 1][cluster1][j] = 0
-                self.Batch_kToClusterPos[self.B + 1] = self.kToClusterPos[:]
-                self.Batch_clusterPosTok[self.B + 1] = self.clusterPosTok[:]
-                self.Batch_K[self.B + 1] = self.K
-            print('1')
-            for i in range(self.K):
-                # current - first ->current
-                cluster1 = self.kToClusterPos[i]
-                if self.Batch_clusterPosTok[cur_bat % (self.B + 1)][cluster1] >= self.Batch_K[cur_bat % (self.B + 1)]:
-                    continue
-                cluster2 = self.Batch_kToClusterPos[cur_bat % (self.B + 1)][self.Batch_clusterPosTok[cur_bat % (self.B + 1)][cluster1]]
-                self.m_z[cluster1] -= self.Batch_m_z[cur_bat % (self.B + 1)][cluster2]
-                if self.m_z[cluster1] < 0:
-                    self.m_z[cluster1] = 0
-                self.n_z[cluster1] -= self.Batch_n_z[cur_bat % (self.B + 1)][cluster2]
-                if self.n_z[cluster1] < 0:
-                    self.n_z[cluster1] = 0
-                for j in range(len(self.n_zv[cluster1])):
-                    if j in self.Batch_n_zv[cur_bat % (self.B + 1)][cluster2]:
-                        self.n_zv[cluster1][j] -= self.Batch_n_zv[cur_bat % (self.B + 1)][cluster2][j]
-                        if self.n_zv[cluster1][j] < 0:
-                            self.n_zv[cluster1][j] = 0
-            p = self.K
+    def sampleCluster(self, d, document):
+        prob = [float(0.0)] * (self.K + 1)
+        for cluster in range(self.K):
+            if cluster not in self.m_z or self.m_z[cluster] == 0:
+                self.m_z[cluster] = 0
+                prob[cluster] = 0
+                continue
+            prob[cluster] = self.m_z[cluster] / (self.D - 1 + self.alpha)
+            valueOfRule2 = 1.0
             i = 0
-            print('2')
-            while i < p:
-                if self.checkEmpty(i):
-                    p -= 1
+            for w in range(document.wordNum):
+                wordNo = document.wordIdArray[w]
+                wordFre = document.wordFreArray[w]
+                for j in range(wordFre):
+                    if cluster not in self.n_zv:
+                        self.n_zv = {}
+                    if wordNo not in self.n_zv[cluster]:
+                        self.n_zv[cluster][wordNo] = 0
+                    if cluster not in self.n_z:
+                        self.n_z[cluster] = 0
+                    valueOfRule2 *= (self.n_zv[cluster][wordNo] + self.beta + j) / (self.n_z[cluster] + self.beta0 + i)
+                    i += 1
+            prob[cluster] *= valueOfRule2
+        prob[self.K] = self.alpha / (self.D - 1 + self.alpha)
+        valueOfRule2 = 1.0
+        i = 0
+        for w in range(document.wordNum):
+            wordFre = document.wordFreArray[w]
+            for j in range(wordFre):
+                valueOfRule2 *= (self.beta + j) / (self.beta0 + i)
                 i += 1
-            # tmp -> last_pos
-            print('3')
-            for i in range(self.Batch_K[self.B + 1]):
-                self.Batch_K[cur_bat % (self.B + 1)] = self.Batch_K[self.B + 1]
-                self.Batch_clusterPosTok[cur_bat % (self.B + 1)] = self.Batch_clusterPosTok[self.B + 1][:]
-                self.Batch_kToClusterPos[cur_bat % (self.B + 1)] = self.Batch_kToClusterPos[self.B + 1][:]
-                for j in range(self.Batch_K[self.B + 1]):
-                    self.Batch_n_zv[cur_bat % (self.B + 1)][j] = self.Batch_n_zv[self.B + 1][j][:]
-                self.Batch_n_z[cur_bat % (self.B + 1)] = self.Batch_n_z[self.B + 1][:]
-                self.Batch_m_z[cur_bat % (self.B + 1)] = self.Batch_m_z[self.B + 1][:]
-        #last = current
-        self.last_clusterPosTok = self.clusterPosTok[:]
-        self.last_kToClusterPos = self.kToClusterPos[:]
-        self.last_m_z = self.m_z
-        self.last_n_z = self.n_z
-        self.last_K = self.K
-        for i in range(self.K):
-            self.last_n_zv[i] = self.n_zv[i][:]
+        prob[self.K] *= valueOfRule2
+        # 为什么这个样子？
+        for k in range(1, self.K+1):
+            prob[k] += prob[k-1]
+        thred = random.random() * prob[self.K]
+        kChoosed = 0
+        while kChoosed < self.K+1:
+            if thred < prob[kChoosed]:
+                break
+            kChoosed += 1
+        if kChoosed == self.K:
+            self.K += 1
+            self.K_current += 1
+        return kChoosed
+
+    def checkEmpty(self, cluster):
+        if self.m_z[cluster] == 0:
+            self.K_current -= 1
+
+    def output(self, documentSet, outputPath, wordList, batchNum):
+        outputDir = outputPath + self.dataset + self.ParametersStr + "Batch" + str(batchNum) + "/"
+        try:
+            isExists = os.path.exists(outputDir)
+            if not isExists:
+                os.makedirs(outputDir)
+                print("Create directory:", outputDir)
+        except:
+            print("Failed to create directory:", outputDir)
+        self.outputClusteringResult(outputDir, documentSet)
+        self.estimatePosterior()
+        self.outputPhiWordsInTopics(outputDir, wordList, self.wordsInTopicNum)
+        self.outputSizeOfEachCluster(outputDir, documentSet)
+
+    def estimatePosterior(self):
+        self.phi_zv = {}
+        for cluster in self.n_zv:
+            n_z_sum = 0
+            if self.m_z[cluster] != 0:
+                if cluster not in self.phi_zv:
+                    self.phi_zv[cluster] = {}
+                for v in self.n_zv[cluster]:
+                    if self.n_zv[cluster][v] != 0:
+                        n_z_sum += self.n_zv[cluster][v]
+                for v in self.n_zv[cluster]:
+                    if self.n_zv[cluster][v] != 0:
+                        self.phi_zv[cluster][v] = float(self.n_zv[cluster][v] + self.beta) / float(n_z_sum + self.beta0)
+
+    def getTop(self, array, rankList, Cnt):
+        index = 0
+        m = 0
+        while m < Cnt and m < len(array):
+            max = 0
+            for no in array:
+                if (array[no] > max and no not in rankList):
+                    index = no
+                    max = array[no]
+            rankList.append(index)
+            m += 1
+
+    def outputPhiWordsInTopics(self, outputDir, wordList, Cnt):
+        outputfiledir = outputDir + str(self.dataset) + "SampleNo" + str(self.sampleNo) + "PhiWordsInTopics.txt"
+        writer = open(outputfiledir, 'w')
+        for k in range(self.K):
+            rankList = []
+            if k not in self.phi_zv:
+                continue
+            topicline = "Topic " + str(k) + ":\n"
+            writer.write(topicline)
+            self.getTop(self.phi_zv[k], rankList, Cnt)
+            for i in range(rankList.__len__()):
+                tmp = "\t" + wordList[rankList[i]] + "\t" + str(self.phi_zv[k][rankList[i]])
+                writer.write(tmp + "\n")
+        writer.close()
+
+    def outputSizeOfEachCluster(self, outputDir, documentSet):
+        outputfile = outputDir + str(self.dataset) + "SampleNo" + str(self.sampleNo) + "SizeOfEachCluster.txt"
+        writer = open(outputfile, 'w')
+        topicCountIntList = []
+        for cluster in range(self.K):
+            if self.m_z[cluster] != 0:
+                topicCountIntList.append([cluster, self.m_z[cluster]])
+        line = ""
+        for i in range(topicCountIntList.__len__()):
+            line += str(topicCountIntList[i][0]) + ":" + str(topicCountIntList[i][1]) + ",\t"
+        writer.write(line + "\n\n")
+        line = ""
+        topicCountIntList.sort(key = lambda tc: tc[1], reverse = True)
+        for i in range(topicCountIntList.__len__()):
+            line += str(topicCountIntList[i][0]) + ":" + str(topicCountIntList[i][1]) + ",\t"
+        writer.write(line + "\n")
+        writer.close()
+
+    def outputClusteringResult(self, outputDir, documentSet):
+        outputPath = outputDir + str(self.dataset) + "SampleNo" + str(self.sampleNo) + "ClusteringResult" + ".txt"
+        writer = open(outputPath, 'w')
+        for d in range(self.startDoc, self.currentDoc):
+            documentID = documentSet.documents[d].documentID
+            cluster = self.z[documentID]
+            writer.write(str(cluster) + "\n")
+        writer.close()
 
     def gibbsOneIteration(self, documentSet):
         for d in range(self.D):
@@ -210,176 +321,6 @@ class Model:
                 wordFre = document.wordFreArray[w]
                 self.n_zv[cluster][wordNo] -= wordFre
                 self.n_z[cluster] -= wordFre
-            if d % self.dt == 0:
-                self.delete_outdated_data(d / self.dt)
-
-    def sampleCluster(self, d, document):
-        prob = [float(0.0)] * (self.K + 1)
-        overflowCount = [0] * (self.K + 1)
-        for k in range(self.K):
-            cluster = self.kToClusterPos[k]
-            prob[k] = self.m_z[cluster] / (self.D - 1 + self.alpha)
-            valueOfRule2 = 1.0
-            i = 0
-            for w in range(document.wordNum):
-                wordNo = document.wordIdArray[w]
-                wordFre = document.wordFreArray[w]
-                for j in range(wordFre):
-                    if valueOfRule2 < self.smallDouble:
-                        overflowCount[k] -= 1
-                        valueOfRule2 *= self.largeDouble
-                    valueOfRule2 *= (self.n_zv[cluster][wordNo] + self.beta + j) / (self.n_z[cluster] + self.beta0 + i)
-                    i += 1
-            prob[k] *= valueOfRule2
-        prob[self.K] = self.alpha / (self.D - 1 + self.alpha)
-        valueOfRule2 = 1.0
-        i = 0
-        for w in range(document.wordNum):
-            wordFre = document.wordFreArray[w]
-            for j in range(wordFre):
-                if valueOfRule2 < self.smallDouble:
-                    print(" - valueOfRule2 < self.smallDouble")
-                    overflowCount[self.K] -= 1
-                    valueOfRule2 *= self.largeDouble
-                valueOfRule2 *= (self.beta + j) / (self.beta0 + i)
-                i += 1
-        prob[self.K] *= valueOfRule2
-        # self.reComputeProbs(prob, overflowCount, self.K + 1)
-        for k in range(1, self.K+1):
-            prob[k] += prob[k-1]
-        thred = random.random() * prob[self.K]
-        kChoosed = 0
-        while kChoosed < self.K+1:
-            if thred < prob[kChoosed]:
-                break
-            kChoosed += 1
-        if kChoosed == self.K:
-            self.K += 1
-            if self.K > self.Kmax:
-                self.enlargeCapacity()
-        return self.kToClusterPos[kChoosed]
-
-    def checkEmpty(self, cluster):
-        if self.m_z[cluster] == 0:
-            k = self.clusterPosTok[cluster]
-            lastClusterPos = self.kToClusterPos[self.K - 1]
-            self.kToClusterPos[self.K - 1] = cluster
-            self.kToClusterPos[k] = lastClusterPos
-            self.clusterPosTok[cluster] = self.K - 1
-            self.clusterPosTok[lastClusterPos] = k
-            self.K -= 1
-            return 1
-        return 0
-
-    def enlargeCapacity(self):
-        Kmax_old = self.Kmax
-        self.Kmax += self.KIncrement
-        m_z_new = [self.Kmax]
-        n_z_new = [self.Kmax]
-        n_zv_new = [self.Kmax][self.V]
-        kToClusterPos_new = [self.Kmax]
-        clusterPosTok_new = [self.Kmax]
-        for k in range(Kmax_old):
-            m_z_new[k] = self.m_z[k]
-            n_z_new[k] = self.n_z[k]
-            kToClusterPos_new[k] = self.kToClusterPos[k]
-            clusterPosTok_new[k] = self.clusterPosTok[k]
-            for t in range(self.V):
-                n_zv_new[k][t] = self.n_zv[k][t]
-        for k in range(Kmax_old, self.Kmax):
-            kToClusterPos_new[k] = k
-            clusterPosTok_new[k] = k
-        self.m_z = m_z_new
-        self.n_z = n_z_new
-        self.n_zv = n_zv_new
-        self.kToClusterPos = kToClusterPos_new
-        self.clusterPosTok = clusterPosTok_new
-
-    def reComputeProbs(self, prob, overflowCount, K):
-        max = -sys.maxsize
-        for i in range(K):
-            if overflowCount[i] > max and prob[i] > 0:
-                max = overflowCount[i]
-        for i in range(K):
-            if prob[i] > 0:
-                prob[i] = prob[i] * (self.largeDouble ** (overflowCount[i] - max))
-
-    def output(self, documentSet, outputPath, wordList):
-        outputDir = outputPath + self.dataset + self.ParametersStr + "/"
-        try:
-            isExists = os.path.exists(outputDir)
-            if not isExists:
-                os.makedirs(outputDir)
-                print("Create directory:", outputDir)
-        except:
-            print("Failed to create directory:", outputDir)
-        self.outputClusteringResult(outputDir, documentSet)
-        self.estimatePosterior()
-        self.outputPhiWordsInTopics(outputDir, wordList, self.wordsInTopicNum)
-        self.outputSizeOfEachCluster(outputDir, documentSet)
-
-    def estimatePosterior(self, ):
-        self.phi_zv = self.K*[[float(0.0)]*self.V]
-        for k in range(self.K):
-            n_z_sum = 0
-            cluster = self.kToClusterPos[k]
-            for v in range(self.V):
-                n_z_sum += self.n_zv[cluster][v]
-            for v in range(self.V):
-                self.phi_zv[k][v] = (self.n_zv[cluster][v] + self.beta) / (n_z_sum + self.beta0)
-
-    def getTop(self, array, rankList, Cnt):
-        index = 0
-        scanned = []
-        max = sys.float_info.min
-        m = 0
-        while m < Cnt and m < len(array):
-            max = sys.float_info.min
-            for no in range(len(array)):
-                if (array[no] >= max and no not in  scanned):
-                    index = no
-                    max = array[no]
-            scanned.append(index)
-            rankList.append(index)
-            m += 1
-
-    def outputPhiWordsInTopics(self, outputDir, wordList, Cnt):
-        outputfiledir = outputDir + str(self.dataset) + "SampleNo" + str(self.sampleNo) + "PhiWordsInTopics.txt"
-        writer = open(outputfiledir, 'w')
-        rankList = []
-        for k in range(self.K):
-            topicline = "Topic " + str(k) + ":"
-            writer.write(topicline)
-            self.getTop(self.phi_zv[k], rankList, Cnt)
-            for i in range(rankList.__len__()):
-                tmp = "\t" + wordList[rankList[i]] + "\t" + str(self.phi_zv[k][rankList[i]])
-                writer.write(tmp + "\n")
-            rankList.clear()
-        writer.close()
-
-    def outputSizeOfEachCluster(self, outputDir, documentSet):
-        outputfile = outputDir + str(self.dataset) + "SampleNo" + str(self.sampleNo) + "SizeOfEachCluster.txt"
-        writer = open(outputfile, 'w')
-        line = ""
-        topicCountIntList = []
-        for k in range(self.K):
-            cluster = self.kToClusterPos[k]
-            topicCountIntList.append([k, self.m_z[cluster]])
-        line = ""
-        topicCountIntList.sort(key = lambda tc: tc[1], reverse = True)
-        for i in range(topicCountIntList.__len__()):
-            line += str(topicCountIntList[i][0]) + ":" + str(topicCountIntList[i][1]) + ",\t"
-        writer.write(line + "\n\n")
-        writer.close()
-
-    def outputClusteringResult(self, outputDir, documentSet):
-        outputPath = outputDir + str(self.dataset) + "SampleNo" + str(self.sampleNo) + "ClusteringResult" + ".txt"
-        writer = open(outputPath, 'w')
-        for d in range(documentSet.D):
-            cluster = self.z[d]
-            k = self.clusterPosTok[cluster]
-            writer.write(str(k) + "\n")
-        writer.close()
 
     def gibbsSamplingIter(self, documentSet, iterNum, sampleNum, outputPath, wordList):
         parameterList = []
@@ -442,6 +383,3 @@ class Model:
         writer.write(temp_json)
         writer.write('\n')
         writer.close()
-
-
-

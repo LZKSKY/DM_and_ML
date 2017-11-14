@@ -14,15 +14,14 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5">
-              <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+            <state relative-caret-position="252">
+              <caret line="12" column="11" lean-forward="false" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
-                <element signature="e#195#429#0" expanded="false" />
-                <element signature="e#533#1741#0" expanded="false" />
-                <element signature="e#1833#3095#0" expanded="false" />
-                <element signature="e#3196#3464#0" expanded="false" />
-                <element signature="e#3497#4051#0" expanded="false" />
+                <element signature="e#378#621#0" expanded="false" />
+                <element signature="e#734#1951#0" expanded="false" />
+                <element signature="e#2052#3265#0" expanded="false" />
+                <element signature="e#3366#3634#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -32,13 +31,12 @@
         <entry file="file://$PROJECT_DIR$/MStream.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="231">
-              <caret line="23" column="35" lean-forward="false" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+              <caret line="30" column="67" lean-forward="false" selection-start-line="30" selection-start-column="67" selection-end-line="30" selection-end-column="67" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#232#532#0" expanded="false" />
-                <element signature="e#570#706#0" expanded="false" />
-                <element signature="e#752#1420#0" expanded="false" />
-                <element signature="e#1470#1817#0" expanded="false" />
+                <element signature="e#241#572#0" expanded="false" />
+                <element signature="e#610#746#0" expanded="false" />
+                <element signature="e#792#1291#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -47,11 +45,10 @@
       <file leaf-file-name="DocumentSet.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DocumentSet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
+            <state relative-caret-position="84">
               <caret line="5" column="55" lean-forward="false" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#127#649#0" expanded="false" />
+                <element signature="e#127#865#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -60,10 +57,11 @@
       <file leaf-file-name="Document.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Document.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="42">
+              <caret line="2" column="64" lean-forward="false" selection-start-line="2" selection-start-column="64" selection-end-line="2" selection-end-column="64" />
               <folding>
                 <element signature="e#90#850#0" expanded="false" />
+                <marker date="1510485621844" expanded="true" signature="501:647" ph="..." />
               </folding>
             </state>
           </provider>
@@ -72,25 +70,24 @@
       <file leaf-file-name="Model.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="819">
-              <caret line="258" column="87" lean-forward="false" selection-start-line="258" selection-start-column="87" selection-end-line="258" selection-end-column="87" />
+            <state relative-caret-position="252">
+              <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#266#684#0" expanded="false" />
-                <element signature="e#732#1773#0" expanded="false" />
-                <element signature="e#1826#2757#0" expanded="false" />
-                <element signature="e#2813#3599#0" expanded="false" />
-                <element signature="e#3651#5518#0" expanded="false" />
-                <element signature="e#5563#5925#0" expanded="false" />
-                <element signature="e#5966#6805#0" expanded="false" />
-                <element signature="e#6869#7146#0" expanded="false" />
-                <element signature="e#7213#7770#0" expanded="false" />
-                <element signature="e#7815#8175#0" expanded="false" />
-                <element signature="e#8229#8643#0" expanded="false" />
-                <element signature="e#8717#9290#0" expanded="false" />
-                <element signature="e#9363#9985#0" expanded="false" />
-                <element signature="e#10057#10380#0" expanded="false" />
-                <element signature="e#10478#13605#0" expanded="false" />
+                <element signature="e#347#1221#0" expanded="false" />
+                <element signature="e#1285#5782#0" expanded="false" />
+                <element signature="e#5830#7515#0" expanded="false" />
+                <element signature="e#7567#8978#0" expanded="false" />
+                <element signature="e#9030#10804#0" expanded="false" />
+                <element signature="e#10849#10907#0" expanded="false" />
+                <element signature="e#10984#11567#0" expanded="false" />
+                <element signature="e#11610#12186#0" expanded="false" />
+                <element signature="e#12240#12536#0" expanded="false" />
+                <element signature="e#12610#13222#0" expanded="false" />
+                <element signature="e#13295#14109#0" expanded="false" />
+                <element signature="e#14181#14553#0" expanded="false" />
+                <element signature="e#14609#15395#0" expanded="false" />
+                <element signature="e#15493#18620#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -111,20 +108,32 @@
       <find>KIncrement</find>
       <find>runMStreamIter</find>
       <find>IterNo</find>
+      <find>print</find>
+      <find>sampleNo</find>
+      <find>phi_zv</find>
+      <find>documentID</find>
+      <find>clusterNoArray</find>
+      <find>self.Kin</find>
+      <find>self.V</find>
+      <find>wordsInTopicNum</find>
+      <find>enlargeCapacity</find>
+      <find>reComputeProbs</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Document.py" />
+        <option value="$USER_HOME$/Documents/文档/复习资料/大三上学期/DMandML/Preprocess/PreprocessTweets.py" />
+        <option value="$USER_HOME$/Documents/文档/复习资料/大三上学期/DMandML/ModStream/preprocessDataset.py" />
         <option value="$PROJECT_DIR$/DocumentSet.py" />
         <option value="$PROJECT_DIR$/MStream.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Model.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1346" />
@@ -145,8 +154,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -158,6 +165,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="RunDashboard">
@@ -186,6 +195,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="MStream" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MStream.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="PreprocessTweets" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Documents/文档/复习资料/大三上学期/DMandML/Preprocess" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="MStream" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Documents/文档/复习资料/大三上学期/DMandML/Preprocess/PreprocessTweets.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -224,16 +250,37 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <list size="3">
+    <configuration name="preprocessDataset" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Documents/文档/复习资料/大三上学期/DMandML/ModStream" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="MStream" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Documents/文档/复习资料/大三上学期/DMandML/ModStream/preprocessDataset.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.MStream" />
       <item index="1" class="java.lang.String" itemvalue="Python.main" />
       <item index="2" class="java.lang.String" itemvalue="Python.inf2son" />
+      <item index="3" class="java.lang.String" itemvalue="Python.PreprocessTweets" />
+      <item index="4" class="java.lang.String" itemvalue="Python.preprocessDataset" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.main" />
-        <item index="1" class="java.lang.String" itemvalue="Python.MStream" />
-        <item index="2" class="java.lang.String" itemvalue="Python.inf2son" />
+        <item index="1" class="java.lang.String" itemvalue="Python.preprocessDataset" />
+        <item index="2" class="java.lang.String" itemvalue="Python.PreprocessTweets" />
+        <item index="3" class="java.lang.String" itemvalue="Python.MStream" />
+        <item index="4" class="java.lang.String" itemvalue="Python.inf2son" />
       </list>
     </recent_temporary>
   </component>
@@ -251,14 +298,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.090771556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09455371" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37335527" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.52138156" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -278,198 +326,44 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="9" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="567">
+          <caret line="96" column="15" lean-forward="false" selection-start-line="96" selection-start-column="15" selection-end-line="96" selection-end-column="15" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
-            <element signature="e#195#429#0" expanded="false" />
-            <element signature="e#533#1741#0" expanded="false" />
-            <element signature="e#1833#3095#0" expanded="false" />
-            <element signature="e#3196#3464#0" expanded="false" />
-            <element signature="e#3497#4051#0" expanded="false" />
+            <element signature="e#378#621#0" expanded="false" />
+            <element signature="e#734#1951#0" expanded="false" />
+            <element signature="e#2052#3265#0" expanded="false" />
+            <element signature="e#3366#3634#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MStream.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        <state relative-caret-position="567">
+          <caret line="28" column="68" lean-forward="false" selection-start-line="28" selection-start-column="68" selection-end-line="28" selection-end-column="68" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#232#532#0" expanded="false" />
-            <element signature="e#570#706#0" expanded="false" />
-            <element signature="e#752#1420#0" expanded="false" />
-            <element signature="e#1470#1817#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Document.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-          <folding>
-            <element signature="e#90#850#0" expanded="false" />
+            <element signature="e#241#572#0" expanded="false" />
+            <element signature="e#610#746#0" expanded="false" />
+            <element signature="e#792#1291#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DocumentSet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="14" column="41" lean-forward="false" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+        <state relative-caret-position="84">
+          <caret line="5" column="55" lean-forward="false" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#127#649#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="146" column="0" lean-forward="true" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#266#684#0" expanded="false" />
-            <element signature="e#732#1773#0" expanded="false" />
-            <element signature="e#1826#2757#0" expanded="false" />
-            <element signature="e#2813#3599#0" expanded="false" />
-            <element signature="e#3651#5518#0" expanded="false" />
-            <element signature="e#5563#5925#0" expanded="false" />
-            <element signature="e#5966#6805#0" expanded="false" />
-            <element signature="e#6869#7146#0" expanded="false" />
-            <element signature="e#7213#7770#0" expanded="false" />
-            <element signature="e#7815#8175#0" expanded="false" />
-            <element signature="e#8229#8643#0" expanded="false" />
-            <element signature="e#8717#9290#0" expanded="false" />
-            <element signature="e#9363#9985#0" expanded="false" />
-            <element signature="e#10057#10380#0" expanded="false" />
-            <element signature="e#10478#13605#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-            <element signature="e#195#429#0" expanded="false" />
-            <element signature="e#533#1741#0" expanded="false" />
-            <element signature="e#1833#3095#0" expanded="false" />
-            <element signature="e#3196#3464#0" expanded="false" />
-            <element signature="e#3497#4051#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MStream.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="21" column="43" lean-forward="true" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#232#532#0" expanded="false" />
-            <element signature="e#570#706#0" expanded="false" />
-            <element signature="e#752#1420#0" expanded="false" />
-            <element signature="e#1470#1817#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DocumentSet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="14" column="41" lean-forward="false" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#127#649#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Document.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
-          <folding>
-            <element signature="e#90#850#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4746">
-          <caret line="226" column="0" lean-forward="false" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#266#684#0" expanded="false" />
-            <element signature="e#732#1773#0" expanded="false" />
-            <element signature="e#1826#2757#0" expanded="false" />
-            <element signature="e#2813#3599#0" expanded="false" />
-            <element signature="e#3651#5518#0" expanded="false" />
-            <element signature="e#5563#5925#0" expanded="false" />
-            <element signature="e#5966#6805#0" expanded="false" />
-            <element signature="e#6869#7146#0" expanded="false" />
-            <element signature="e#7213#7770#0" expanded="false" />
-            <element signature="e#7815#8175#0" expanded="false" />
-            <element signature="e#8229#8643#0" expanded="false" />
-            <element signature="e#8717#9290#0" expanded="false" />
-            <element signature="e#9363#9985#0" expanded="false" />
-            <element signature="e#10057#10380#0" expanded="false" />
-            <element signature="e#10478#13605#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.2/system/python_stubs/-1475806415/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="298" column="7" lean-forward="true" selection-start-line="298" selection-start-column="7" selection-end-line="298" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../inf2json/inf2son.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="15" lean-forward="true" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
-          <caret line="258" column="87" lean-forward="false" selection-start-line="258" selection-start-column="87" selection-end-line="258" selection-end-column="87" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#266#684#0" expanded="false" />
-            <element signature="e#732#1773#0" expanded="false" />
-            <element signature="e#1826#2757#0" expanded="false" />
-            <element signature="e#2813#3599#0" expanded="false" />
-            <element signature="e#3651#5518#0" expanded="false" />
-            <element signature="e#5563#5925#0" expanded="false" />
-            <element signature="e#5966#6805#0" expanded="false" />
-            <element signature="e#6869#7146#0" expanded="false" />
-            <element signature="e#7213#7770#0" expanded="false" />
-            <element signature="e#7815#8175#0" expanded="false" />
-            <element signature="e#8229#8643#0" expanded="false" />
-            <element signature="e#8717#9290#0" expanded="false" />
-            <element signature="e#9363#9985#0" expanded="false" />
-            <element signature="e#10057#10380#0" expanded="false" />
-            <element signature="e#10478#13605#0" expanded="false" />
+            <element signature="e#127#865#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -480,17 +374,396 @@
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
             <element signature="e#90#850#0" expanded="false" />
+            <marker date="1510485621844" expanded="true" signature="501:647" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4515">
+          <caret line="215" column="42" lean-forward="true" selection-start-line="215" selection-start-column="42" selection-end-line="215" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#347#1221#0" expanded="false" />
+            <element signature="e#1285#5782#0" expanded="false" />
+            <element signature="e#5830#7515#0" expanded="false" />
+            <element signature="e#7567#8978#0" expanded="false" />
+            <element signature="e#9030#10804#0" expanded="false" />
+            <element signature="e#10849#10907#0" expanded="false" />
+            <element signature="e#10984#11567#0" expanded="false" />
+            <element signature="e#11610#12186#0" expanded="false" />
+            <element signature="e#12240#12536#0" expanded="false" />
+            <element signature="e#12610#13222#0" expanded="false" />
+            <element signature="e#13295#14109#0" expanded="false" />
+            <element signature="e#14181#14553#0" expanded="false" />
+            <element signature="e#14609#15395#0" expanded="false" />
+            <element signature="e#15493#18620#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="96" column="15" lean-forward="false" selection-start-line="96" selection-start-column="15" selection-end-line="96" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+            <element signature="e#378#621#0" expanded="false" />
+            <element signature="e#734#1951#0" expanded="false" />
+            <element signature="e#2052#3265#0" expanded="false" />
+            <element signature="e#3366#3634#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MStream.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="28" column="68" lean-forward="true" selection-start-line="28" selection-start-column="68" selection-end-line="28" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#241#572#0" expanded="false" />
+            <element signature="e#610#746#0" expanded="false" />
+            <element signature="e#792#1291#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Document.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="e#90#850#0" expanded="false" />
+            <marker date="1510485621844" expanded="true" signature="501:647" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DocumentSet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
+        <state relative-caret-position="84">
           <caret line="5" column="55" lean-forward="false" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#127#649#0" expanded="false" />
+            <element signature="e#127#865#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="42" lean-forward="true" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#347#1221#0" expanded="false" />
+            <element signature="e#1285#5782#0" expanded="false" />
+            <element signature="e#5830#7515#0" expanded="false" />
+            <element signature="e#7567#8978#0" expanded="false" />
+            <element signature="e#9030#10804#0" expanded="false" />
+            <element signature="e#10849#10907#0" expanded="false" />
+            <element signature="e#10984#11567#0" expanded="false" />
+            <element signature="e#11610#12186#0" expanded="false" />
+            <element signature="e#12240#12536#0" expanded="false" />
+            <element signature="e#12610#13222#0" expanded="false" />
+            <element signature="e#13295#14109#0" expanded="false" />
+            <element signature="e#14181#14553#0" expanded="false" />
+            <element signature="e#14609#15395#0" expanded="false" />
+            <element signature="e#15493#18620#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+            <element signature="e#378#621#0" expanded="false" />
+            <element signature="e#734#1951#0" expanded="false" />
+            <element signature="e#2052#3265#0" expanded="false" />
+            <element signature="e#3366#3634#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MStream.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#241#572#0" expanded="false" />
+            <element signature="e#610#746#0" expanded="false" />
+            <element signature="e#792#1291#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentSet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="5" column="55" lean-forward="false" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
+          <folding>
+            <element signature="e#127#865#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Document.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="e#90#850#0" expanded="false" />
+            <marker date="1510485621844" expanded="true" signature="501:647" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5334">
+          <caret line="258" column="0" lean-forward="true" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#347#1221#0" expanded="false" />
+            <element signature="e#1285#5782#0" expanded="false" />
+            <element signature="e#5830#7515#0" expanded="false" />
+            <element signature="e#7567#8978#0" expanded="false" />
+            <element signature="e#9030#10804#0" expanded="false" />
+            <element signature="e#10849#10907#0" expanded="false" />
+            <element signature="e#10984#11567#0" expanded="false" />
+            <element signature="e#11610#12186#0" expanded="false" />
+            <element signature="e#12240#12536#0" expanded="false" />
+            <element signature="e#12610#13222#0" expanded="false" />
+            <element signature="e#13295#14109#0" expanded="false" />
+            <element signature="e#14181#14553#0" expanded="false" />
+            <element signature="e#14609#15395#0" expanded="false" />
+            <element signature="e#15493#18620#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+            <element signature="e#378#621#0" expanded="false" />
+            <element signature="e#734#1951#0" expanded="false" />
+            <element signature="e#2052#3265#0" expanded="false" />
+            <element signature="e#3366#3634#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MStream.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="693">
+          <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#241#572#0" expanded="false" />
+            <element signature="e#610#746#0" expanded="false" />
+            <element signature="e#792#1291#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Document.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+          <folding>
+            <element signature="e#90#850#0" expanded="false" />
+            <marker date="1510485621844" expanded="true" signature="501:647" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentSet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="14" column="41" lean-forward="false" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+          <folding>
+            <element signature="e#127#865#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="146" column="0" lean-forward="true" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#347#1221#0" expanded="false" />
+            <element signature="e#1285#5782#0" expanded="false" />
+            <element signature="e#5830#7515#0" expanded="false" />
+            <element signature="e#7567#8978#0" expanded="false" />
+            <element signature="e#9030#10804#0" expanded="false" />
+            <element signature="e#10849#10907#0" expanded="false" />
+            <element signature="e#10984#11567#0" expanded="false" />
+            <element signature="e#11610#12186#0" expanded="false" />
+            <element signature="e#12240#12536#0" expanded="false" />
+            <element signature="e#12610#13222#0" expanded="false" />
+            <element signature="e#13295#14109#0" expanded="false" />
+            <element signature="e#14181#14553#0" expanded="false" />
+            <element signature="e#14609#15395#0" expanded="false" />
+            <element signature="e#15493#18620#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+            <element signature="e#378#621#0" expanded="false" />
+            <element signature="e#734#1951#0" expanded="false" />
+            <element signature="e#2052#3265#0" expanded="false" />
+            <element signature="e#3366#3634#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MStream.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="21" column="43" lean-forward="true" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#241#572#0" expanded="false" />
+            <element signature="e#610#746#0" expanded="false" />
+            <element signature="e#792#1291#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentSet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" column="41" lean-forward="false" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+          <folding>
+            <element signature="e#127#865#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Document.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+          <folding>
+            <element signature="e#90#850#0" expanded="false" />
+            <marker date="1510485621844" expanded="true" signature="501:647" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4746">
+          <caret line="226" column="0" lean-forward="false" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#347#1221#0" expanded="false" />
+            <element signature="e#1285#5782#0" expanded="false" />
+            <element signature="e#5830#7515#0" expanded="false" />
+            <element signature="e#7567#8978#0" expanded="false" />
+            <element signature="e#9030#10804#0" expanded="false" />
+            <element signature="e#10849#10907#0" expanded="false" />
+            <element signature="e#10984#11567#0" expanded="false" />
+            <element signature="e#11610#12186#0" expanded="false" />
+            <element signature="e#12240#12536#0" expanded="false" />
+            <element signature="e#12610#13222#0" expanded="false" />
+            <element signature="e#13295#14109#0" expanded="false" />
+            <element signature="e#14181#14553#0" expanded="false" />
+            <element signature="e#14609#15395#0" expanded="false" />
+            <element signature="e#15493#18620#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2017.2/system/python_stubs/-1475806415/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="298" column="7" lean-forward="true" selection-start-line="298" selection-start-column="7" selection-end-line="298" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../inf2json/inf2son.py" />
+    <entry file="file://$USER_HOME$/Documents/文档/复习资料/大三上学期/DMandML/Preprocess/PreprocessTweetsEvents.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="141" column="0" lean-forward="false" selection-start-line="141" selection-start-column="0" selection-end-line="152" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/文档/复习资料/大三上学期/DMandML/Preprocess/PreprocessTweets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="158" column="53" lean-forward="true" selection-start-line="158" selection-start-column="53" selection-end-line="158" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/文档/复习资料/大三上学期/DMandML/ModStream/preprocessDataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="54" column="32" lean-forward="true" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Document.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="64" lean-forward="false" selection-start-line="2" selection-start-column="64" selection-end-line="2" selection-end-column="64" />
+          <folding>
+            <element signature="e#90#850#0" expanded="false" />
+            <marker date="1510485621844" expanded="true" signature="501:647" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DocumentSet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="5" column="55" lean-forward="false" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
+          <folding>
+            <element signature="e#127#865#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#347#1221#0" expanded="false" />
+            <element signature="e#1285#5782#0" expanded="false" />
+            <element signature="e#5830#7515#0" expanded="false" />
+            <element signature="e#7567#8978#0" expanded="false" />
+            <element signature="e#9030#10804#0" expanded="false" />
+            <element signature="e#10849#10907#0" expanded="false" />
+            <element signature="e#10984#11567#0" expanded="false" />
+            <element signature="e#11610#12186#0" expanded="false" />
+            <element signature="e#12240#12536#0" expanded="false" />
+            <element signature="e#12610#13222#0" expanded="false" />
+            <element signature="e#13295#14109#0" expanded="false" />
+            <element signature="e#14181#14553#0" expanded="false" />
+            <element signature="e#14609#15395#0" expanded="false" />
+            <element signature="e#15493#18620#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -498,28 +771,26 @@
     <entry file="file://$PROJECT_DIR$/MStream.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
-          <caret line="23" column="35" lean-forward="false" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+          <caret line="30" column="67" lean-forward="false" selection-start-line="30" selection-start-column="67" selection-end-line="30" selection-end-column="67" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#232#532#0" expanded="false" />
-            <element signature="e#570#706#0" expanded="false" />
-            <element signature="e#752#1420#0" expanded="false" />
-            <element signature="e#1470#1817#0" expanded="false" />
+            <element signature="e#241#572#0" expanded="false" />
+            <element signature="e#610#746#0" expanded="false" />
+            <element signature="e#792#1291#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5">
-          <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        <state relative-caret-position="252">
+          <caret line="12" column="11" lean-forward="false" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
-            <element signature="e#195#429#0" expanded="false" />
-            <element signature="e#533#1741#0" expanded="false" />
-            <element signature="e#1833#3095#0" expanded="false" />
-            <element signature="e#3196#3464#0" expanded="false" />
-            <element signature="e#3497#4051#0" expanded="false" />
+            <element signature="e#378#621#0" expanded="false" />
+            <element signature="e#734#1951#0" expanded="false" />
+            <element signature="e#2052#3265#0" expanded="false" />
+            <element signature="e#3366#3634#0" expanded="false" />
           </folding>
         </state>
       </provider>

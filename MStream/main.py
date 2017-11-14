@@ -4,15 +4,25 @@ import time
 
 dataDir = "data/"
 outputPath = "result/"
+dataset = "newtweets"
+timefil = "timefil"
+docNum = 1
+alpha = 0.1
+K = 0 # Number of clusters
+KIncrement = 100
+beta = 0.02
+iterNum = 2
+sampleNum = 1
+wordsInTopicNum = 15
 
-def runMStreamSimple(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum):
-    mstream = MStream(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum)
+def runMStreamSimple_batch(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, timefil, wordsInTopicNum):
+    mstream = MStream(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, timefil, wordsInTopicNum)
     mstream.getDocuments()
     for sampleNo in range(sampleNum):
         print("SampleNo:"+str(sampleNo))
         mstream.runMStream(sampleNo)
 
-def runWithAlphaScale(beta, K, KIncrement, iterNum, sampleNum, dataset, wordsInTopicNum, docNum):
+def runWithAlphaScale(beta, K, KIncrement, iterNum, sampleNum, dataset, timefil, wordsInTopicNum, docNum):
     parameters = []
     timeArrayOfParas = []
     p = 0.1
@@ -20,7 +30,7 @@ def runWithAlphaScale(beta, K, KIncrement, iterNum, sampleNum, dataset, wordsInT
         alpha = docNum * p
         parameters.append(p)
         print("p:", p)
-        mstream = MStream(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum)
+        mstream = MStream(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, timefil, wordsInTopicNum)
         mstream.getDocuments()
         timeArray = []
         for sampleNo in range(1, sampleNum+1):
@@ -45,14 +55,14 @@ def runWithAlphaScale(beta, K, KIncrement, iterNum, sampleNum, dataset, wordsInT
         writer.write('\n')
     writer.close()
 
-def runWithBetas(alpha, K, KIncrement, iterNum, sampleNum, dataset, wordsInTopicNum):
+def runWithBetas(alpha, K, KIncrement, iterNum, sampleNum, dataset, timefil, wordsInTopicNum):
     parameters = []
     timeArrayOfParas = []
     beta = 0.01
     while beta <= 0.101:
         parameters.append(beta)
         print("beta:", beta)
-        mstream = MStream(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum)
+        mstream = MStream(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, timefil, wordsInTopicNum)
         mstream.getDocuments()
         timeArray = []
         for sampleNo in range(1, sampleNum + 1):
@@ -61,7 +71,6 @@ def runWithBetas(alpha, K, KIncrement, iterNum, sampleNum, dataset, wordsInTopic
             mstream.runMStream(sampleNo)
             endTime = time.time()
             timeArray.append(int(endTime - startTime))
-            print("  time is ", int(endTime - startTime))
         timeArrayOfParas.append(timeArray)
         beta += 0.01
     fileParameters = "MStreamDiffBeta" + "K" + str(K) + "iterNum" + str(iterNum) + "SampleNum" + str(sampleNum) + \
@@ -88,16 +97,7 @@ def runWithNiters(K, KIncrement, alpha, beta, iterNum, sampleNum, eventName, wor
         sampleNo += 1
 
 if __name__ == '__main__':
-    dataset = "Tweet"
-    docNum = 2472
-    alpha = 0.1
-    K = 0 # Number of clusters
-    KIncrement = 100
-    beta = 0.02
-    iterNum = 2
-    sampleNum = 1
-    wordsInTopicNum = 15
-    runMStreamSimple(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum)
-    # runWithAlphaScale(beta, K, KIncrement, iterNum, sampleNum, dataset, wordsInTopicNum, docNum)
-    # runWithBetas(alpha, K, KIncrement, iterNum, sampleNum, dataset, wordsInTopicNum)
+    # runMStreamSimple_batch(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, timefil, wordsInTopicNum)
+    runWithAlphaScale(beta, K, KIncrement, iterNum, sampleNum, dataset, timefil, wordsInTopicNum, docNum)
+    # runWithBetas(alpha, K, KIncrement, iterNum, sampleNum, dataset, timefil, wordsInTopicNum)
     # runWithNiters(K, KIncrement, alpha, beta, iterNum, sampleNum, dataset, wordsInTopicNum)
