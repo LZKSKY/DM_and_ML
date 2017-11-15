@@ -1,16 +1,14 @@
 import random
-import sys
 import os
 import time
 import json
 import copy
 
-
 class Model:
     KIncrement = 100
     smallDouble = 1e-150
     largeDouble = 1e150
-    Max_Batch = 1 # Max number of batches we will consider
+    Max_Batch = 5 # Max number of batches we will consider
 
     def __init__(self, K, KIncrement, V, iterNum,alpha, beta, dataset, ParametersStr, sampleNo, wordsInTopicNum, timefil):
         self.dataset = dataset
@@ -33,6 +31,8 @@ class Model:
         with open(timefil) as timef:
             for line in timef:
                 buff = line.strip().split(' ')
+                if buff == ['']:
+                    break
                 self.batchNum2tweetID[self.batchNum] = int(buff[1])
                 self.batchNum += 1
         self.batchNum = 1
@@ -108,7 +108,7 @@ class Model:
                 self.D += 1
             else:
                 break
-        print("\t", self.D, "documents will be analyze")
+        print("\t" + str(self.D) + " documents will be analyze")
         for d in range(self.currentDoc, self.D_All):
             document = documentSet.documents[d]
             documentID = document.documentID
@@ -225,10 +225,10 @@ class Model:
         try:
             isExists = os.path.exists(outputDir)
             if not isExists:
-                os.makedirs(outputDir)
-                print("Create directory:", outputDir)
+                os.mkdir(outputDir)
+                print("\tCreate directory:", outputDir)
         except:
-            print("Failed to create directory:", outputDir)
+            print("ERROR: Failed to create directory:", outputDir)
         self.outputClusteringResult(outputDir, documentSet)
         self.estimatePosterior()
         self.outputPhiWordsInTopics(outputDir, wordList, self.wordsInTopicNum)
@@ -299,7 +299,7 @@ class Model:
         for d in range(self.startDoc, self.currentDoc):
             documentID = documentSet.documents[d].documentID
             cluster = self.z[documentID]
-            writer.write(str(cluster) + "\n")
+            writer.write(str(documentID) + " " + str(cluster) + "\n")
         writer.close()
 
     def gibbsOneIteration(self, documentSet):
